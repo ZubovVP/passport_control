@@ -1,7 +1,7 @@
-package ru.job4j.pasport_control;
+package ru.job4j.pasport_control.controllers.controllers;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Created by Intellij IDEA.
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
  * Version: $Id$.
  * Date: 27.04.2021.
  */
-@RestController
+@Controller
 public class IndexControl {
 
     @GetMapping({"/", "/index"})
