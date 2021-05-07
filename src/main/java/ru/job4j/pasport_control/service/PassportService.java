@@ -92,14 +92,13 @@ public class PassportService implements Actions<Passport> {
 
     @Override
     public List<Passport> findByReplaceable() {
-        return this.pr.findByUnavaliabe(LocalDate.now().plusMonths(3));
+        return this.pr.findByReplaceable(LocalDate.now().plusMonths(3));
     }
 
     private Passport create(Passport passport) {
         passport.setCreated(LocalDate.now());
         passport.setDuration(LocalDate.now().plusYears(10));
-        Passport result = pr.save(passport);
-        return result;
+        return pr.save(passport);
     }
 
     private Passport update(Passport passport) {

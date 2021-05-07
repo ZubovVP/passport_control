@@ -27,4 +27,7 @@ public interface PassportRepository extends CrudRepository<Passport, Integer> {
 
     @Query("select u from Passport u where u.duration <= :date")
     List<Passport> findByUnavaliabe(@Param("date") LocalDate date);
+
+    @Query("select u from Passport u where u.duration <= :date and  u.duration >= current_date")
+    List<Passport> findByReplaceable(@Param("date") LocalDate date);
 }
