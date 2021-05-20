@@ -2,7 +2,9 @@ package ru.job4j.pasport_control;
 
 import com.fasterxml.jackson.databind.ser.std.NumberSerializers;
 import com.fasterxml.jackson.databind.ser.std.StringSerializer;
+import liquibase.integration.spring.SpringLiquibase;
 import org.apache.kafka.clients.producer.ProducerConfig;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -16,6 +18,7 @@ import org.springframework.kafka.core.ProducerFactory;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.client.RestTemplate;
 
+import javax.sql.DataSource;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,6 +46,14 @@ public class PassportControlApplication extends SpringBootServletInitializer {
     @Bean
     public ProducerFactory<Integer, String> producerFactory() {
         return new DefaultKafkaProducerFactory<>(producerConfigs());
+    }
+
+    @Bean
+    public SpringLiquibase liquibase(@Qualifier("dataSource") DataSource ds) {
+        SpringLiquibase liquibase = new SpringLiquibase();
+        liquibase.setChangeLog("classpath:liquibase/liquibase-changeLog.xml");
+        liquibase.setDataSource(ds);
+        return liquibase;
     }
 
     @Bean
