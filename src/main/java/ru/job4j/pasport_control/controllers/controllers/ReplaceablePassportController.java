@@ -1,6 +1,7 @@
 package ru.job4j.pasport_control.controllers.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Controller;
@@ -23,15 +24,20 @@ import java.util.List;
 public class ReplaceablePassportController {
     @Autowired
     private RestTemplate rest;
+    private String API;
 
     @GetMapping("/find-replaceable")
     public String getUnavaliabePasports(Model model) {
         List<Passport> passports = rest.exchange(
-                "http://localhost:8080/passport/find-replaceable",
-                HttpMethod.GET, null, new ParameterizedTypeReference<List<Passport>>() {
+                String.format("%s%s", this.API, "find-replaceable"), HttpMethod.GET, null, new ParameterizedTypeReference<List<Passport>>() {
                 }
         ).getBody();
         model.addAttribute("result", passports);
         return "index";
+    }
+
+    @Value("${api-url}")
+    public void setAPI(String API) {
+        this.API = API;
     }
 }

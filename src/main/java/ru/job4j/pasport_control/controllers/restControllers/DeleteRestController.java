@@ -22,7 +22,6 @@ public class DeleteRestController {
     @PostMapping("/delete")
     public ResponseEntity<Void> delete(@RequestBody int id) {
         this.ps.delete(id);
-
         return ResponseEntity.ok().build();
     }
 
